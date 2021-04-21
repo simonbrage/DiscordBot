@@ -155,12 +155,8 @@ async def infractions(ctx, nickname):
     elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'GrunK_'
     elif nickname.lower() == 'brage' or nickname.lower() == 'bragi' or nickname.lower() == 'goat': nickname = 'bragi'
 
-    try:
-        date = faceit_get_player_infraction_date(nickname)
-    except:
-        await ctx.send("Did you type that name right? <:ezy:558785929171697695>")
-        return
-    
+
+    date = faceit_get_player_infraction_date(nickname)
     if date == '':
         await ctx.send('**{}** has **0** infractions. :partying_face:'.format(nickname))
     else:
