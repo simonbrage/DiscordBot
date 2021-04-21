@@ -114,7 +114,7 @@ async def stats(ctx, nickname):
     except IndexError as err:
         print("Leavers are stopping me from reading data. \n Error: {} \n".format(err))
     finally:
-        await ctx.send("Stupid leavers are interfering with the match data. Check your stats on https://www.faceit.com/en/players/{} :pepehands:".format(nickname))
+        await ctx.send("Stupid leavers are interfering with the match data. Check your stats on https://www.faceit.com/en/players/{} <:pepehands:834501916754837594>".format(nickname))
 
     embed=discord.Embed(title='Last {} matches - **{}**'.format(matches_length, nickname),  url='https://www.faceit.com/en/players/{}'.format(nickname), color=0x824dff)
     embed.set_thumbnail(url=player_avatar)
