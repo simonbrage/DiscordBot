@@ -78,16 +78,22 @@ async def stats(ctx, nickname):
 
     date = datetime.datetime.now()
 
-    player_id = faceit_get_player_id(nickname)
-    player_country = faceit_get_player_country(nickname)
-    player_avatar = faceit_get_player_avatar(nickname)
-    player_level = faceit_get_player_level(nickname)
-    player_elo = faceit_get_player_elo(nickname)
+    try:
 
-    results = faceit_get_lifetime_stats_recent_results(player_id)
+        player_id = faceit_get_player_id(nickname)
+        player_country = faceit_get_player_country(nickname)
+        player_avatar = faceit_get_player_avatar(nickname)
+        player_level = faceit_get_player_level(nickname)
+        player_elo = faceit_get_player_elo(nickname)
 
-    country_ranking = faceit_get_country_ranking(player_id, player_country)
-    region_ranking = faceit_get_region_ranking(player_id)
+        results = faceit_get_lifetime_stats_recent_results(player_id)
+
+        country_ranking = faceit_get_country_ranking(player_id, player_country)
+        region_ranking = faceit_get_region_ranking(player_id)
+    except KeyError as err:
+        print("A faulty name has been put in. \n Error: {}".format(err))
+    finally:
+        await ctx.send("Did you type that name right? <:ezy:558785929171697695>")    
 
     match_list = faceit_get_matches(player_id)['items']
     matches_length = len(match_list)
