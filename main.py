@@ -46,28 +46,29 @@ async def profile(ctx, nickname):
 
         country_ranking = faceit_get_country_ranking(player_id, player_country)
         region_ranking = faceit_get_region_ranking(player_id)
+
+        embed=discord.Embed(title='Career - **{}**'.format(nickname),  url='https://www.faceit.com/en/players/{}'.format(nickname), color=0x824dff)
+        embed.set_thumbnail(url=player_avatar)
+        embed.add_field(name='Level', value=player_level, inline=True)
+        embed.add_field(name='ELO', value=player_elo, inline=True)
+        embed.add_field(name='Matches', value=total_matches_played, inline=True)
+        embed.add_field(name='⠀', value='━━━━━━━━━━━━━━━', inline=False)
+        embed.add_field(name='K/D', value=kd_ratio, inline=True)
+        embed.add_field(name='HS%', value=hs_rate + '%', inline=True)
+        embed.add_field(name='Win%', value=win_rate + '%', inline=True)
+        embed.add_field(name='Best Win Streak', value=longest_win_streak + " games", inline=True)
+        embed.add_field(name='Past results', value=results, inline=True)
+        embed.add_field(name='⠀', value='━━━━━━━━━━━━━━━', inline=False)
+        embed.add_field(name='Ranking :flag_dk:', value=country_ranking, inline=True)
+        embed.add_field(name='Ranking :flag_eu:', value=region_ranking, inline=True)
+        embed.set_footer(text=date)
+
+        await ctx.send(embed=embed)
+
     except KeyError as err:
         print("A faulty name has been put in. \n Error: {}".format(err))
-    finally:
         await ctx.send("Did you type that name right? <:ezy:558785929171697695>")
-
-    embed=discord.Embed(title='Career - **{}**'.format(nickname),  url='https://www.faceit.com/en/players/{}'.format(nickname), color=0x824dff)
-    embed.set_thumbnail(url=player_avatar)
-    embed.add_field(name='Level', value=player_level, inline=True)
-    embed.add_field(name='ELO', value=player_elo, inline=True)
-    embed.add_field(name='Matches', value=total_matches_played, inline=True)
-    embed.add_field(name='⠀', value='━━━━━━━━━━━━━━━', inline=False)
-    embed.add_field(name='K/D', value=kd_ratio, inline=True)
-    embed.add_field(name='HS%', value=hs_rate + '%', inline=True)
-    embed.add_field(name='Win%', value=win_rate + '%', inline=True)
-    embed.add_field(name='Best Win Streak', value=longest_win_streak + " games", inline=True)
-    embed.add_field(name='Past results', value=results, inline=True)
-    embed.add_field(name='⠀', value='━━━━━━━━━━━━━━━', inline=False)
-    embed.add_field(name='Ranking :flag_dk:', value=country_ranking, inline=True)
-    embed.add_field(name='Ranking :flag_eu:', value=region_ranking, inline=True)
-    embed.set_footer(text=date)
-
-    await ctx.send(embed=embed)
+        return
 
 # Displays player stats from last twenty matches.
 @bot.command(name='stats', help='Displays stats of last 20 matches.')
@@ -81,19 +82,20 @@ async def stats(ctx, nickname):
     try:
 
         player_id = faceit_get_player_id(nickname)
-        player_country = faceit_get_player_country(nickname)
-        player_avatar = faceit_get_player_avatar(nickname)
-        player_level = faceit_get_player_level(nickname)
-        player_elo = faceit_get_player_elo(nickname)
-
-        results = faceit_get_lifetime_stats_recent_results(player_id)
-
-        country_ranking = faceit_get_country_ranking(player_id, player_country)
-        region_ranking = faceit_get_region_ranking(player_id)
     except KeyError as err:
         print("A faulty name has been put in. \n Error: {}".format(err))
-    finally:
-        await ctx.send("Did you type that name right? <:ezy:558785929171697695>")    
+        await ctx.send("Did you type that name right? <:ezy:558785929171697695>")
+        return
+
+    player_country = faceit_get_player_country(nickname)
+    player_avatar = faceit_get_player_avatar(nickname)
+    player_level = faceit_get_player_level(nickname)
+    player_elo = faceit_get_player_elo(nickname)
+
+    results = faceit_get_lifetime_stats_recent_results(player_id)
+
+    country_ranking = faceit_get_country_ranking(player_id, player_country)
+    region_ranking = faceit_get_region_ranking(player_id)    
 
     match_list = faceit_get_matches(player_id)['items']
     matches_length = len(match_list)
@@ -123,8 +125,9 @@ async def stats(ctx, nickname):
         win_rate = str(round(win_rate*(100/matches_length)))
     except IndexError as err:
         print("Leavers are stopping me from reading data. \n Error: {} \n".format(err))
-    finally:
         await ctx.send("Stupid leavers are interfering with the match data <:pepehands:834501916754837594> \n\nCheck your stats on https://www.faceit.com/en/players/{}".format(nickname))
+        return
+        
 
     embed=discord.Embed(title='Last {} matches - **{}**'.format(matches_length, nickname),  url='https://www.faceit.com/en/players/{}'.format(nickname), color=0x824dff)
     embed.set_thumbnail(url=player_avatar)
