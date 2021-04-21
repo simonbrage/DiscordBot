@@ -155,13 +155,17 @@ async def infractions(ctx, nickname):
     elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'GrunK_'
     elif nickname.lower() == 'brage' or nickname.lower() == 'bragi' or nickname.lower() == 'goat': nickname = 'bragi'
 
-    date = faceit_get_player_infraction_date(nickname)
-    if date == '':
-        await ctx.send('**{}** has **0** infractions. :partying_face:'.format(nickname))
-    else:
-        afk = date['afk']
-        leaver = date['leaver']
-        not_checked_in = date['qm_not_checkedin']
-        await ctx.send('**{}\'s** last infraction was on {}\n  AFK: {}\n  Leaver: {}\n  Not checked in: {}'.format(nickname, date, afk, leaver, not_checked_in))
-
+    try:
+        date = faceit_get_player_infraction_date(nickname)
+        if date == '':
+            await ctx.send('**{}** has **0** infractions. :partying_face:'.format(nickname))
+        else:
+            afk = date['afk']
+            leaver = date['leaver']
+            not_checked_in = date['qm_not_checkedin']
+            await ctx.send('**{}\'s** last infraction was on {}\n  AFK: {}\n  Leaver: {}\n  Not checked in: {}'.format(nickname, date, afk, leaver, not_checked_in))
+    except:
+        print("A faulty name has been put in. \n Error: {}".format(err))
+        await ctx.send("Did you type that name right? <:ezy:558785929171697695>")
+        
 bot.run(TOKEN)
