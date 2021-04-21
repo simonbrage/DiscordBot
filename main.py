@@ -156,13 +156,15 @@ async def infractions(ctx, nickname):
     elif nickname.lower() == 'brage' or nickname.lower() == 'bragi' or nickname.lower() == 'goat': nickname = 'bragi'
 
 
-    date = faceit_get_player_infraction_date(nickname)
+
+    date = faceit_get_player_infractions(nickname)['last_infraction_date']
     if date == '':
         await ctx.send('**{}** has **0** infractions. :partying_face:'.format(nickname))
     else:
-        afk = date['afk']
-        leaver = date['leaver']
-        not_checked_in = date['qm_not_checkedin']
+        infractions = faceit_get_player_infractions(nickname)
+        afk = infractions['afk']
+        leaver = infractions['leaver']
+        not_checked_in = infractions['qm_not_checkedin']
         await ctx.send('**{}\'s** last infraction was on {}\n  AFK: {}\n  Leaver: {}\n  Not checked in: {}'.format(nickname, date, afk, leaver, not_checked_in))
 
 bot.run(TOKEN)

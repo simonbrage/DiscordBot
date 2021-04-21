@@ -40,11 +40,11 @@ def faceit_get_player_elo(nickname):
 
     return response.json()['games']['csgo']['faceit_elo']
 
-def faceit_get_player_infraction_date(nickname):
+def faceit_get_player_infractions(nickname):
     query_params = {'nickname': nickname}
     response = requests.get(url + '/players', headers=header, params=query_params)
 
-    return response.json()['infractions']['last_infraction_date']
+    return response.json()['infractions']
 
 # PLAYER LIFETIME STATS
 def faceit_get_lifetime_stats(player_id):
