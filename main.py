@@ -112,7 +112,7 @@ async def stats(ctx, nickname):
         avg_kd_ratio = round((avg_kd_ratio/matches_length),2)
         win_rate = str(round(win_rate*(100/matches_length)))
     except IndexError as err:
-        print("Leavers are stopping me from reading data. \n Error: {}".format(err))
+        print("Leavers are stopping me from reading data. \n Error: {} \n".format(err))
     finally:
         await ctx.send("Stupid leavers are interfering with the match data. Check your stats on https://www.faceit.com/en/players/{}".format(nickname))
 
