@@ -164,8 +164,8 @@ async def infractions(ctx, nickname):
             leaver = date['leaver']
             not_checked_in = date['qm_not_checkedin']
             await ctx.send('**{}\'s** last infraction was on {}\n  AFK: {}\n  Leaver: {}\n  Not checked in: {}'.format(nickname, date, afk, leaver, not_checked_in))
-    except:
+    except KeyError as err:
         print("A faulty name has been put in. \n Error: {}".format(err))
         await ctx.send("Did you type that name right? <:ezy:558785929171697695>")
-        
+
 bot.run(TOKEN)
