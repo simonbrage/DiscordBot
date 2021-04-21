@@ -3,7 +3,7 @@ import requests
 import json
 #from dotenv import load_dotenv
 
-load_dotenv()
+#load_dotenv()
 API_KEY = os.getenv('API_KEY')
 
 header = {'accept': 'application/json', 'Authorization': 'Bearer {}'.format(API_KEY)}
