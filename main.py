@@ -29,13 +29,17 @@ async def profile(ctx, nickname):
     elif nickname.lower() == 'brage' or nickname.lower() == 'bragi' or nickname.lower() == 'goat': nickname = 'bragi'
 
     date = datetime.datetime.now()
-
-    player_id = faceit_get_player_id(nickname)
-    player_country = faceit_get_player_country(nickname)
-    player_avatar = faceit_get_player_avatar(nickname)
+    try:
+        player_id = faceit_get_player_id(nickname)
+        player_country = faceit_get_player_country(nickname)
+        player_avatar = faceit_get_player_avatar(nickname)
     
-    player_level = faceit_get_player_level(nickname)
-    player_elo = faceit_get_player_elo(nickname)
+        player_level = faceit_get_player_level(nickname)
+        player_elo = faceit_get_player_elo(nickname)
+    except KeyError as err:
+        print("A faulty name has been put in.")
+    finally:
+        await ctx.send("Did you type that name right? <:ezy:558785929171697695>")
 
     total_matches_played = faceit_get_lifetime_stats_total_matches(player_id)
     kd_ratio = faceit_get_lifetime_stats_kd_ratio(player_id)
@@ -114,7 +118,7 @@ async def stats(ctx, nickname):
     except IndexError as err:
         print("Leavers are stopping me from reading data. \n Error: {} \n".format(err))
     finally:
-        await ctx.send("Stupid leavers are interfering with the match data. Check your stats on https://www.faceit.com/en/players/{} <:pepehands:834501916754837594>".format(nickname))
+        await ctx.send("Stupid leavers are interfering with the match data <:pepehands:834501916754837594> \n\nCheck your stats on https://www.faceit.com/en/players/{}".format(nickname))
 
     embed=discord.Embed(title='Last {} matches - **{}**'.format(matches_length, nickname),  url='https://www.faceit.com/en/players/{}'.format(nickname), color=0x824dff)
     embed.set_thumbnail(url=player_avatar)
