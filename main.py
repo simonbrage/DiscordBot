@@ -157,14 +157,16 @@ async def infractions(ctx, nickname):
 
     try:
         date = faceit_get_player_infraction_date(nickname)
-        if date == '':
-            await ctx.send('**{}** has **0** infractions. :partying_face:'.format(nickname))
-        else:
-            afk = date['afk']
-            leaver = date['leaver']
-            not_checked_in = date['qm_not_checkedin']
-            await ctx.send('**{}\'s** last infraction was on {}\n  AFK: {}\n  Leaver: {}\n  Not checked in: {}'.format(nickname, date, afk, leaver, not_checked_in))
     except:
         await ctx.send("Did you type that name right? <:ezy:558785929171697695>")
+        return
+    
+    if date == '':
+        await ctx.send('**{}** has **0** infractions. :partying_face:'.format(nickname))
+    else:
+        afk = date['afk']
+        leaver = date['leaver']
+        not_checked_in = date['qm_not_checkedin']
+        await ctx.send('**{}\'s** last infraction was on {}\n  AFK: {}\n  Leaver: {}\n  Not checked in: {}'.format(nickname, date, afk, leaver, not_checked_in))
 
 bot.run(TOKEN)
