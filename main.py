@@ -1,7 +1,7 @@
 import os
 import discord
 import datetime
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 from discord.ext import commands
 from faceit import *
 
