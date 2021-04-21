@@ -36,20 +36,20 @@ async def profile(ctx, nickname):
     
         player_level = faceit_get_player_level(nickname)
         player_elo = faceit_get_player_elo(nickname)
+
+        total_matches_played = faceit_get_lifetime_stats_total_matches(player_id)
+        kd_ratio = faceit_get_lifetime_stats_kd_ratio(player_id)
+        win_rate = faceit_get_lifetime_stats_win_rate(player_id)
+        hs_rate = faceit_get_lifetime_stats_hs_rate(player_id)
+        results = faceit_get_lifetime_stats_recent_results(player_id)
+        longest_win_streak = faceit_get_longest_win_streak(player_id)
+
+        country_ranking = faceit_get_country_ranking(player_id, player_country)
+        region_ranking = faceit_get_region_ranking(player_id)
     except KeyError as err:
         print("A faulty name has been put in. \n Error: {}".format(err))
     finally:
         await ctx.send("Did you type that name right? <:ezy:558785929171697695>")
-
-    total_matches_played = faceit_get_lifetime_stats_total_matches(player_id)
-    kd_ratio = faceit_get_lifetime_stats_kd_ratio(player_id)
-    win_rate = faceit_get_lifetime_stats_win_rate(player_id)
-    hs_rate = faceit_get_lifetime_stats_hs_rate(player_id)
-    results = faceit_get_lifetime_stats_recent_results(player_id)
-    longest_win_streak = faceit_get_longest_win_streak(player_id)
-
-    country_ranking = faceit_get_country_ranking(player_id, player_country)
-    region_ranking = faceit_get_region_ranking(player_id)
 
     embed=discord.Embed(title='Career - **{}**'.format(nickname),  url='https://www.faceit.com/en/players/{}'.format(nickname), color=0x824dff)
     embed.set_thumbnail(url=player_avatar)
