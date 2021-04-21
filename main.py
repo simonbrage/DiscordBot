@@ -112,24 +112,7 @@ async def stats(ctx, nickname):
         avg_kd_ratio = round((avg_kd_ratio/matches_length),2)
         win_rate = str(round(win_rate*(100/matches_length)))
     except:
-        ctx.send("Those stupid leavers are causing problems again, brb")
-    finally:
-        for m in range(matches_length):
-            match_id = match_list[m]['match_id']
-            player = faceit_get_match_stats(match_id)['rounds'][0]['teams']
-            for p in range(2):
-                for i in range(4):
-                    if player[p]['players'][i]['player_id'] == player_id:
-                        avg_kills += float(player[p]['players'][i]['player_stats']['Kills'])
-                        avg_kr_ratio += float(player[p]['players'][i]['player_stats']['K/R Ratio'])
-                        avg_hs_ratio += float(player[p]['players'][i]['player_stats']['Headshots %'])
-                        avg_kd_ratio += float(player[p]['players'][i]['player_stats']['K/D Ratio'])
-                        win_rate += float(player[p]['players'][i]['player_stats']['Result'])
-        avg_kills = round((avg_kills/matches_length))
-        avg_kr_ratio = round((avg_kr_ratio/matches_length),2)
-        avg_hs_ratio = str(round((avg_hs_ratio/matches_length)))
-        avg_kd_ratio = round((avg_kd_ratio/matches_length),2)
-        win_rate = str(round(win_rate*(100/matches_length)))
+        await ctx.send("Stupid leavers are interfering with the match data. Check your stats on https://www.faceit.com/en/players/{}".format(nickname))
 
     embed=discord.Embed(title='Last {} matches - **{}**'.format(matches_length, nickname),  url='https://www.faceit.com/en/players/{}'.format(nickname), color=0x824dff)
     embed.set_thumbnail(url=player_avatar)
