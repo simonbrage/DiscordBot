@@ -37,7 +37,7 @@ async def profile(ctx, nickname):
         player_level = faceit_get_player_level(nickname)
         player_elo = faceit_get_player_elo(nickname)
     except KeyError as err:
-        print("A faulty name has been put in.")
+        print("A faulty name has been put in. \n Error: {}".format(err))
     finally:
         await ctx.send("Did you type that name right? <:ezy:558785929171697695>")
 
