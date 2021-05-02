@@ -35,6 +35,7 @@ async def profile(ctx, nickname):
         player_avatar = faceit_get_player_avatar(nickname)
     
         player_level = faceit_get_player_level(nickname)
+        if player_level == '10': player_level = '<:faceit10:838215465859940364>'
         player_elo = faceit_get_player_elo(nickname)
 
         total_matches_played = faceit_get_lifetime_stats_total_matches(player_id)
