@@ -56,7 +56,7 @@ async def profile(ctx, nickname):
         embed.add_field(name='K/D', value=kd_ratio, inline=True)
         embed.add_field(name='HS%', value=hs_rate + '%', inline=True)
         embed.add_field(name='Win%', value=win_rate + '%', inline=True)
-        embed.add_field(name='Best Win Streak', value=longest_win_streak + " games", inline=True)
+        embed.add_field(name='Best Win Streak', value=longest_win_streak + ' games', inline=True)
         embed.add_field(name='Past results', value=results, inline=True)
         embed.add_field(name='⠀', value='━━━━━━━━━━━━━━━', inline=False)
         embed.add_field(name='Ranking :flag_dk:', value=country_ranking, inline=True)
@@ -66,8 +66,8 @@ async def profile(ctx, nickname):
         await ctx.send(embed=embed)
 
     except KeyError as err:
-        print("A faulty name has been put in. \n Error: {}".format(err))
-        await ctx.send("Did you type that name right? <:ezy:558785929171697695>")
+        print('A faulty name has been put in. \n Error: {}'.format(err))
+        await ctx.send('Did you type that name right? <:ezy:558785929171697695>')
         return
 
 # Displays player stats from last twenty matches.
@@ -83,14 +83,14 @@ async def stats(ctx, nickname):
 
         player_id = faceit_get_player_id(nickname)
     except KeyError as err:
-        print("A faulty name has been put in. \n Error: {}".format(err))
-        await ctx.send("Did you type that name right? <:ezy:558785929171697695>")
+        print('A faulty name has been put in. \n Error: {}'.format(err))
+        await ctx.send('Did you type that name right? <:ezy:558785929171697695>')
         return
 
     player_country = faceit_get_player_country(nickname)
     player_avatar = faceit_get_player_avatar(nickname)
     player_level = faceit_get_player_level(nickname)
-    if player_level == "10": player_level = "<:faceit10:838215465859940364>"
+    if player_level == '10': player_level = '<:faceit10:838215465859940364>'
     player_elo = faceit_get_player_elo(nickname)
 
     results = faceit_get_lifetime_stats_recent_results(player_id)
@@ -125,8 +125,8 @@ async def stats(ctx, nickname):
         avg_kd_ratio = round((avg_kd_ratio/matches_length),2)
         win_rate = str(round(win_rate*(100/matches_length)))
     except IndexError as err:
-        print("Error: {} \n".format(err))
-        await ctx.send("Something is interfering with the match data <:pepehands:834501916754837594> \n\nCheck your stats on https://www.faceit.com/en/players/{}".format(nickname))
+        print('Error: {} \n'.format(err))
+        await ctx.send('Something is interfering with the match data <:pepehands:834501916754837594> \n\nCheck your stats on https://www.faceit.com/en/players/{}'.format(nickname))
         return
         
 
@@ -167,7 +167,7 @@ async def infractions(ctx, nickname):
             not_checked_in = infractions['qm_not_checkedin']
             await ctx.send('**{}\'s** last infraction was on {}\n  AFK: {}\n  Leaver: {}\n  Not checked in: {}'.format(nickname, date, afk, leaver, not_checked_in))
     except KeyError as err:
-        print("A faulty name has been put in. \n Error: {}".format(err))
-        await ctx.send("Did you type that name right? <:ezy:558785929171697695>")
+        print('A faulty name has been put in. \n Error: {}'.format(err))
+        await ctx.send('Did you type that name right? <:ezy:558785929171697695>')
 
 bot.run(TOKEN)
