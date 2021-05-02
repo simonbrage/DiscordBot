@@ -111,7 +111,7 @@ async def stats(ctx, nickname):
             match_id = match_list[m]['match_id']
             player = faceit_get_match_stats(match_id)['rounds'][0]['teams']
             for p in range(2):
-                for i in range(5):
+                for i in range(len(player[p]['players'])):
                     if player[p]['players'][i]['player_id'] == player_id:
                         avg_kills += float(player[p]['players'][i]['player_stats']['Kills'])
                         avg_kr_ratio += float(player[p]['players'][i]['player_stats']['K/R Ratio'])
@@ -124,8 +124,8 @@ async def stats(ctx, nickname):
         avg_kd_ratio = round((avg_kd_ratio/matches_length),2)
         win_rate = str(round(win_rate*(100/matches_length)))
     except IndexError as err:
-        print("Leavers are stopping me from reading data. \n Error: {} \n".format(err))
-        await ctx.send("Stupid leavers are interfering with the match data <:pepehands:834501916754837594> \n\nCheck your stats on https://www.faceit.com/en/players/{}".format(nickname))
+        print("Error: {} \n".format(err))
+        await ctx.send("Something is interfering with the match data <:pepehands:834501916754837594> \n\nCheck your stats on https://www.faceit.com/en/players/{}".format(nickname))
         return
         
 
