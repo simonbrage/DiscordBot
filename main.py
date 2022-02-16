@@ -25,7 +25,7 @@ async def backflip(ctx):
 @bot.command(name='profile', help='Displays Faceit profile of a player.')
 async def profile(ctx, nickname):
     if nickname.lower() == 'doomyo': nickname = 'Doomyo'
-    elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'GrunK_'
+    elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'Grundt'
     elif nickname.lower() == 'brage' or nickname.lower() == 'bragi' or nickname.lower() == 'goat': nickname = 'bragi'
 
     date = datetime.datetime.now()
