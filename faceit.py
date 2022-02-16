@@ -40,11 +40,12 @@ def faceit_get_player_elo(nickname):
 
     return response.json()['games']['csgo']['faceit_elo']
 
-def faceit_get_player_infractions(nickname):
-    query_params = {'nickname': nickname}
-    response = requests.get(url + '/players', headers=header, params=query_params)
+# ---- Information on infractions no longer supported in FACEIT API ----
+#def faceit_get_player_infractions(nickname):
+#    query_params = {'nickname': nickname}
+#    response = requests.get(url + '/players', headers=header, params=query_params)
 
-    return response.json()['infractions']
+#    return response.json()['infractions']
 
 # PLAYER LIFETIME STATS
 def faceit_get_lifetime_stats(player_id):
