@@ -32,9 +32,13 @@ async def backflip(ctx):
 # Displays lifetime stats, current ranking, and results of last five games (W or L)
 @bot.command(name='profile', help='Displays Faceit profile of a player.')
 async def profile(ctx, nickname):
+    previous_status = bot.guilds[0].get_member(bot.user.id).activity
+
     if nickname.lower() == 'doomyo': nickname = 'Doomyo'
     elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'Grundt'
     elif nickname.lower() == 'brage' or nickname.lower() == 'bragi' or nickname.lower() == 'goat': nickname = 'bragi'
+
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="{}'s career".format(nickname)))
 
     date = datetime.datetime.now()
     try:
@@ -73,18 +77,24 @@ async def profile(ctx, nickname):
         embed.set_footer(text=date)
 
         await ctx.send(embed=embed)
+        await bot.change_presence(activity=previous_status)
 
     except KeyError as err:
         print('A faulty name has been put in. \n Error: {}'.format(err))
         await ctx.send('Did you type that name right? <:ezy:558785929171697695>')
+        await bot.change_presence(activity=previous_status)
         return
 
 # Displays player stats from last twenty matches.
 @bot.command(name='stats', help='Displays stats of last 20 matches.')
 async def stats(ctx, nickname):
+    previous_status = bot.guilds[0].get_member(bot.user.id).activity
+
     if nickname.lower() == 'doomyo': nickname = 'Doomyo'
     elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'Grundt'
     elif nickname.lower() == 'brage' or nickname.lower() == 'bragi' or nickname.lower() == 'goat': nickname = 'bragi'
+
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="{}'s stats".format(nickname)))
 
     date = datetime.datetime.now()
 
@@ -94,6 +104,7 @@ async def stats(ctx, nickname):
     except KeyError as err:
         print('A faulty name has been put in. \n Error: {}'.format(err))
         await ctx.send('Did you type that name right? <:ezy:558785929171697695>')
+        await bot.change_presence(activity=previous_status)
         return
 
     player_country = faceit_get_player_country(nickname)
@@ -136,6 +147,7 @@ async def stats(ctx, nickname):
     except IndexError as err:
         print('Error: {} \n'.format(err))
         await ctx.send('Something is interfering with the match data <:pepehands:834501916754837594> \n\nCheck your stats on https://www.faceit.com/en/players/{}'.format(nickname))
+        await bot.change_presence(activity=previous_status)
         return
         
 
@@ -156,6 +168,7 @@ async def stats(ctx, nickname):
     embed.set_footer(text=date)
 
     await ctx.send(embed=embed)
+    await bot.change_presence(activity=previous_status)
 
 # ---- Information on infractions no longer supported by FACEIT API ----
 # Displays infractions (AFK, leave, no check-in)
