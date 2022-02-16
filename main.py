@@ -28,6 +28,7 @@ async def on_ready():
 @bot.command(name='backflip', help='Displays a backflip GIF.')
 async def backflip(ctx):
     await ctx.send('https://giphy.com/gifs/officialfiym-forever-in-your-mind-fiym-xT0xetpPHT8UryiiqY')
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='-help'))
 
 # Displays lifetime stats, current ranking, and results of last five games (W or L)
 @bot.command(name='profile', help='Displays Faceit profile of a player.')
