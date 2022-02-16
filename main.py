@@ -34,7 +34,7 @@ async def profile(ctx, nickname):
         player_country = faceit_get_player_country(nickname)
         player_avatar = faceit_get_player_avatar(nickname)
     
-        player_level = faceit_get_player_level(nickname)
+        player_level = str(faceit_get_player_level(nickname))
         if player_level == '10': player_level = '<:faceit10:838215465859940364>'
         player_elo = faceit_get_player_elo(nickname)
 
@@ -90,7 +90,7 @@ async def stats(ctx, nickname):
 
     player_country = faceit_get_player_country(nickname)
     player_avatar = faceit_get_player_avatar(nickname)
-    player_level = faceit_get_player_level(nickname)
+    player_level = str(faceit_get_player_level(nickname))
     if player_level == '10': player_level = '<:faceit10:838215465859940364>'
     player_elo = faceit_get_player_elo(nickname)
 
