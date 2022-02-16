@@ -8,7 +8,12 @@ from faceit import *
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-bot = commands.Bot(command_prefix='-')
+# Rewrites the 'No category' in the help-command
+help_command = commands.DefaultHelpCommand(no_category = 'Commands')
+
+bot = commands.Bot(
+    help_command = help_command
+)
 
 @bot.event
 async def on_ready():
