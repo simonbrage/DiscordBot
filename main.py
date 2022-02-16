@@ -16,6 +16,7 @@ bot = commands.Bot(
     help_command = help_command
 )
 
+# Start-up
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='-help'))
