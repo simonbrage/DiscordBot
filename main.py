@@ -18,6 +18,7 @@ bot = commands.Bot(
 
 @bot.event
 async def on_ready():
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='-help'))
     print(f'{bot.user.name} is connected.')
 
 # ----------------------------------------------
