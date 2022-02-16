@@ -32,7 +32,7 @@ def faceit_get_player_level(nickname):
     query_params = {'nickname': nickname}
     response = requests.get(url + '/players', headers=header, params=query_params)
 
-    return response.json()['games']['csgo']['skill_level_label']
+    return response.json()['games']['csgo']['skill_level']
 
 def faceit_get_player_elo(nickname):
     query_params = {'nickname': nickname}
