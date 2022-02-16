@@ -75,7 +75,7 @@ async def profile(ctx, nickname):
 @bot.command(name='stats', help='Displays stats of last 20 matches.')
 async def stats(ctx, nickname):
     if nickname.lower() == 'doomyo': nickname = 'Doomyo'
-    elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'GrunK_'
+    elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'Grundt'
     elif nickname.lower() == 'brage' or nickname.lower() == 'bragi' or nickname.lower() == 'goat': nickname = 'bragi'
 
     date = datetime.datetime.now()
@@ -154,7 +154,7 @@ async def stats(ctx, nickname):
 @bot.command(name='infractions', help='How naughty have you been?')
 async def infractions(ctx, nickname):
     if nickname.lower() == 'doomyo': nickname = 'Doomyo'
-    elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'GrunK_'
+    elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'Grundt'
     elif nickname.lower() == 'brage' or nickname.lower() == 'bragi' or nickname.lower() == 'goat': nickname = 'bragi'
 
     try:      
