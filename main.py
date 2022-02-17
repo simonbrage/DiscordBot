@@ -36,7 +36,7 @@ async def profile(ctx, nickname):
     previous_status = bot.guilds[0].get_member(bot.user.id).activity
 
     if nickname.lower() == 'doomyo': nickname = 'Doomyo'
-    elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'Grundt'
+    elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'xGrunk'
     elif nickname.lower() == 'brage' or nickname.lower() == 'bragi' or nickname.lower() == 'goat': nickname = 'bragi'
 
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="{}'s career".format(nickname)))
@@ -92,7 +92,7 @@ async def stats(ctx, nickname):
     previous_status = bot.guilds[0].get_member(bot.user.id).activity
 
     if nickname.lower() == 'doomyo': nickname = 'Doomyo'
-    elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'Grundt'
+    elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'xGrunk'
     elif nickname.lower() == 'brage' or nickname.lower() == 'bragi' or nickname.lower() == 'goat': nickname = 'bragi'
 
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="{}'s stats".format(nickname)))
@@ -176,7 +176,7 @@ async def stats(ctx, nickname):
 #@bot.command(name='infractions', help='How naughty have you been?')
 #async def infractions(ctx, nickname):
 #    if nickname.lower() == 'doomyo': nickname = 'Doomyo'
-#    elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'Grundt'
+#    elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'xGrunk'
 #    elif nickname.lower() == 'brage' or nickname.lower() == 'bragi' or nickname.lower() == 'goat': nickname = 'bragi'
 
 #    try:      
