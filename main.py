@@ -28,7 +28,6 @@ async def on_ready():
 @bot.command(name='backflip', help='Displays a backflip GIF.')
 async def backflip(ctx):
     await ctx.send('https://giphy.com/gifs/officialfiym-forever-in-your-mind-fiym-xT0xetpPHT8UryiiqY')
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='-help'))
     message = ctx.message
     await message.add_reaction("<:ezy:558785929171697695>")
 
