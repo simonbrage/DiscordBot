@@ -29,11 +29,16 @@ async def on_ready():
 async def backflip(ctx):
     await ctx.send('https://giphy.com/gifs/officialfiym-forever-in-your-mind-fiym-xT0xetpPHT8UryiiqY')
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='-help'))
+    message = ctx.message
+    await message.add_reaction("<:ezy:558785929171697695>")
 
 # Displays lifetime stats, current ranking, and results of last five games (W or L)
 @bot.command(name='profile', help='Displays Faceit profile of a player.')
 async def profile(ctx, nickname):
     previous_status = bot.guilds[0].get_member(bot.user.id).activity
+
+    message = ctx.message
+    await message.add_reaction("<:ezy:558785929171697695>")
 
     if nickname.lower() == 'doomyo': nickname = 'Doomyo'
     elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'xGrunk'
@@ -90,6 +95,9 @@ async def profile(ctx, nickname):
 @bot.command(name='stats', help='Displays stats of last 20 matches.')
 async def stats(ctx, nickname):
     previous_status = bot.guilds[0].get_member(bot.user.id).activity
+    
+    message = ctx.message
+    await message.add_reaction("<:ezy:558785929171697695>")
 
     if nickname.lower() == 'doomyo': nickname = 'Doomyo'
     elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'xGrunk'
