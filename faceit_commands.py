@@ -7,6 +7,7 @@ def check_nickname(nickname):
     if nickname.lower() == 'doomyo': nickname = 'Doomyo'
     elif nickname.lower() == 'grunk' or nickname.lower() == 'grunk_' or nickname.lower() == 'grundt': nickname = 'xGrunk'
     elif nickname.lower() == 'brage' or nickname.lower() == 'bragi' or nickname.lower() == 'goat': nickname = 'bragi'
+    elif nickname.lower() == 'friis' or nickname.lower() == 'friis007' or nickname.lower() == 'lordfriis': nickname = 'Friis007'
     
     return nickname
 
