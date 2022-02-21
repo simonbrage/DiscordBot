@@ -30,17 +30,14 @@ async def on_ready():
 @bot.command(name='backflip', help='Displays a backflip GIF.')
 async def backflip(ctx):
     await ctx.send('https://giphy.com/gifs/officialfiym-forever-in-your-mind-fiym-xT0xetpPHT8UryiiqY')
-    message = ctx.message
-    await message.add_reaction("<:ezy:558785929171697695>")
+    await ctx.message.add_reaction("<:ezy:558785929171697695>")
 
 # Displays lifetime stats, current ranking, and results of last five games (W or L)
 @bot.command(name='profile', help='Displays Faceit profile of a player.')
 async def profile(ctx, nickname):
     previous_status = bot.guilds[0].get_member(bot.user.id).activity
 
-    message = ctx.message
-    await message.add_reaction("<:ezy:558785929171697695>")
-
+    await ctx.message.add_reaction("<:ezy:558785929171697695>")
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="{}'s career".format(nickname)))
 
     date = datetime.datetime.now()
@@ -77,9 +74,7 @@ async def profile(ctx, nickname):
 async def stats(ctx, nickname):
     previous_status = bot.guilds[0].get_member(bot.user.id).activity
     
-    message = ctx.message
-    await message.add_reaction("<:ezy:558785929171697695>")
-
+    await ctx.message.add_reaction("<:ezy:558785929171697695>")
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="{}'s stats".format(nickname)))
 
     date = datetime.datetime.now()
