@@ -1,3 +1,4 @@
+from ast import alias
 import os
 import discord
 import datetime
@@ -5,7 +6,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 from faceit_api import *
 from faceit_commands import *
-from misc_commands import backflip_gif
+from misc_commands import *
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -33,6 +34,17 @@ async def backflip(ctx):
     gif = backflip_gif()
     await ctx.send(gif)
     await ctx.message.add_reaction("<:ezy:558785929171697695>")
+
+@bot.command(name='roll', help='Pick a random number between 1 and the given number (default 1-6).')
+async def roll(ctx, num=None):
+    if num == None: return await ctx.send('{} rolled {}'.format(ctx.message.author.mention, dice_roll()))
+    try:
+        await ctx.send('{} rolled {}'.format(ctx.message.author.mention, custom_dice_roll(num)))
+        await ctx.message.delete()
+    except ValueError:
+        await ctx.message.delete(delay=5)
+        return await ctx.send("Invalid number", delete_after=5)
+        
 
 # -----------------------------------------------
 # --------------- FACEIT COMMANDS ---------------
