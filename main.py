@@ -35,7 +35,9 @@ async def backflip(ctx):
     await ctx.send(gif)
     await ctx.message.add_reaction("<:ezy:558785929171697695>")
 
-@bot.command(name='roll', help='Pick a random number between 1 and the given number (default 1-6).')
+@bot.command(name='roll', 
+            description= 'Pick a random number between 1 and your number.', 
+            help='Pick a random number between 1 and the given number. Defaults to 1 and 6 if no number is given.')
 async def roll(ctx, num=None):
     if num == None: return await ctx.send('{} rolled {}'.format(ctx.message.author.mention, dice_roll()))
     try:
