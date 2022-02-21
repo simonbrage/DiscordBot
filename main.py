@@ -3,7 +3,7 @@ import discord
 import datetime
 from dotenv import load_dotenv
 from discord.ext import commands
-from faceit import *
+from faceit_api import *
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
