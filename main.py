@@ -43,7 +43,7 @@ class Miscellaneous(commands.Cog):
         if num == None: return await ctx.send('{} rolled {}'.format(ctx.message.author.mention, dice_roll()))
         try:
             await ctx.send('{} rolled {}'.format(ctx.message.author.mention, custom_dice_roll(num)))
-            await ctx.message.delete()
+            await ctx.message.delete(delay=2)
         except ValueError:
             await ctx.message.delete(delay=5)
             return await ctx.send("Invalid number", delete_after=5)
