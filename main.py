@@ -40,9 +40,10 @@ class Miscellaneous(commands.Cog):
                 description= 'Pick a random number between 1 and the given number. Defaults to 1 and 6 if no number is given.', 
                 help='Pick a random number between 1 and your number.')
     async def roll(self, ctx, num=None):
-        if num == None: return await ctx.send('{} rolled {}'.format(ctx.message.author.mention, dice_roll()))
+        if num == None: return await ctx.send('{} rolled {} (1-6)'.format(ctx.message.author.mention, dice_roll()))
         try:
-            await ctx.send('{} rolled {}'.format(ctx.message.author.mention, custom_dice_roll(num)))
+            number = custom_dice_roll(num)
+            await ctx.send('{} rolled {} (1-{})'.format(ctx.message.author.mention, number, number))
             await ctx.message.delete(delay=2)
         except ValueError:
             await ctx.message.delete(delay=5)
