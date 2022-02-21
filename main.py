@@ -12,6 +12,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 # Rewrites the 'No category' in the help-command
 help_command = commands.DefaultHelpCommand(no_category = 'Commands')
 
+# Bot setup
 bot = commands.Bot(
     command_prefix=commands.when_mentioned_or('-'),
     help_command = help_command
