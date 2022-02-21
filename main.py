@@ -25,14 +25,18 @@ async def on_ready():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='-help'))
     print(f'{bot.user.name} is connected.')
 
-# ----------------------------------------------
-# ------------------ COMMANDS ------------------
-# ----------------------------------------------
+# -----------------------------------------------
+# ---------------- MISC COMMANDS ----------------
+# -----------------------------------------------
 @bot.command(name='backflip', help='Displays a backflip GIF.')
 async def backflip(ctx):
     gif = backflip_gif()
     await ctx.send(gif)
     await ctx.message.add_reaction("<:ezy:558785929171697695>")
+
+# -----------------------------------------------
+# --------------- FACEIT COMMANDS ---------------
+# -----------------------------------------------
 
 # Displays lifetime stats, current ranking, and results of last five games (W or L)
 @bot.command(name='profile', help='Displays Faceit profile of a player.')
@@ -113,4 +117,5 @@ async def stats(ctx, nickname):
     await ctx.send(embed=embed)
     await bot.change_presence(activity=previous_status)
 
+# RUN
 bot.run(TOKEN)
