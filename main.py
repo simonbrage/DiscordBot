@@ -12,7 +12,7 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 # Rewrites the 'No category' in the help-command
-help_command = commands.DefaultHelpCommand(no_category = 'Commands')
+help_command = commands.DefaultHelpCommand(no_category = 'Default')
 
 # Bot setup
 bot = commands.Bot(
@@ -29,107 +29,113 @@ async def on_ready():
 # -----------------------------------------------
 # ---------------- MISC COMMANDS ----------------
 # -----------------------------------------------
-@bot.command(name='backflip', help='Displays a backflip GIF.')
-async def backflip(ctx):
-    gif = backflip_gif()
-    await ctx.send(gif)
-    await ctx.message.add_reaction("<:ezy:558785929171697695>")
+class Miscellaneous(commands.Cog):
+    @commands.command(name='backflip', help='Displays a backflip GIF.')
+    async def backflip(self, ctx):
+        gif = backflip_gif()
+        await ctx.send(gif)
+        await ctx.message.add_reaction("<:ezy:558785929171697695>")
 
-@bot.command(name='roll', 
-            description= 'Pick a random number between 1 and the given number. Defaults to 1 and 6 if no number is given.', 
-            help='Pick a random number between 1 and your number.')
-async def roll(ctx, num=None):
-    if num == None: return await ctx.send('{} rolled {}'.format(ctx.message.author.mention, dice_roll()))
-    try:
-        await ctx.send('{} rolled {}'.format(ctx.message.author.mention, custom_dice_roll(num)))
-        await ctx.message.delete()
-    except ValueError:
-        await ctx.message.delete(delay=5)
-        return await ctx.send("Invalid number", delete_after=5)
+    @commands.command(name='roll', 
+                description= 'Pick a random number between 1 and the given number. Defaults to 1 and 6 if no number is given.', 
+                help='Pick a random number between 1 and your number.')
+    async def roll(self, ctx, num=None):
+        if num == None: return await ctx.send('{} rolled {}'.format(ctx.message.author.mention, dice_roll()))
+        try:
+            await ctx.send('{} rolled {}'.format(ctx.message.author.mention, custom_dice_roll(num)))
+            await ctx.message.delete()
+        except ValueError:
+            await ctx.message.delete(delay=5)
+            return await ctx.send("Invalid number", delete_after=5)
         
 
 # -----------------------------------------------
 # --------------- FACEIT COMMANDS ---------------
 # -----------------------------------------------
 
-# Displays lifetime stats, current ranking, and results of last five games (W or L)
-@bot.command(name='profile', help='Displays Faceit profile of a player.')
-async def profile(ctx, nickname):
-    previous_status = bot.guilds[0].get_member(bot.user.id).activity
+class Faceit(commands.Cog):
+    # Displays lifetime stats, current ranking, and results of last five games (W or L)
+    @commands.command(name='profile', help='Displays Faceit profile of a player.')
+    async def profile(self, ctx, nickname):
+        previous_status = bot.guilds[0].get_member(bot.user.id).activity
 
-    await ctx.message.add_reaction("<:ezy:558785929171697695>")
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="{}'s career".format(nickname)))
+        await ctx.message.add_reaction("<:ezy:558785929171697695>")
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="{}'s career".format(nickname)))
 
-    date = datetime.datetime.now()
+        date = datetime.datetime.now()
 
-    try:
-        profile = find_profile(nickname)
-    except KeyError as err:
-        print('A faulty name has been put in. \n Error: {}'.format(err))
-        await ctx.send('Did you type that name right? <:ezy:558785929171697695>')
+        try:
+            profile = find_profile(nickname)
+        except KeyError as err:
+            print('A faulty name has been put in. \n Error: {}'.format(err))
+            await ctx.send('Did you type that name right? <:ezy:558785929171697695>')
+            await bot.change_presence(activity=previous_status)
+            return
+
+        embed=discord.Embed(title='Career - **{}**'.format(nickname),  url='https://www.faceit.com/en/players/{}'.format(nickname), color=0x824dff)
+        embed.set_thumbnail(url=profile['player_avatar'])
+        embed.add_field(name='Level', value=profile['player_level'], inline=True)
+        embed.add_field(name='ELO', value=profile['player_elo'], inline=True)
+        embed.add_field(name='Matches', value=profile['total_matches_played'], inline=True)
+        embed.add_field(name='\u200b', value='━━━━━━━━━━━━━━━', inline=False)
+        embed.add_field(name='K/D', value=profile['kd_ratio'], inline=True)
+        embed.add_field(name='HS%', value=profile['hs_rate'] + '%', inline=True)
+        embed.add_field(name='Win%', value=profile['win_rate'] + '%', inline=True)
+        embed.add_field(name='Best Win Streak', value=profile['longest_win_streak'] + ' games', inline=True)
+        embed.add_field(name='Past results', value=profile['results'], inline=True)
+        embed.add_field(name='\u200b', value='━━━━━━━━━━━━━━━', inline=False)
+        embed.add_field(name='Ranking :flag_dk:', value=profile['country_ranking'], inline=True)
+        embed.add_field(name='Ranking :flag_eu:', value=profile['region_ranking'], inline=True)
+        embed.set_footer(text=date)
+
+        await ctx.send(embed=embed)
         await bot.change_presence(activity=previous_status)
-        return
 
-    embed=discord.Embed(title='Career - **{}**'.format(nickname),  url='https://www.faceit.com/en/players/{}'.format(nickname), color=0x824dff)
-    embed.set_thumbnail(url=profile['player_avatar'])
-    embed.add_field(name='Level', value=profile['player_level'], inline=True)
-    embed.add_field(name='ELO', value=profile['player_elo'], inline=True)
-    embed.add_field(name='Matches', value=profile['total_matches_played'], inline=True)
-    embed.add_field(name='\u200b', value='━━━━━━━━━━━━━━━', inline=False)
-    embed.add_field(name='K/D', value=profile['kd_ratio'], inline=True)
-    embed.add_field(name='HS%', value=profile['hs_rate'] + '%', inline=True)
-    embed.add_field(name='Win%', value=profile['win_rate'] + '%', inline=True)
-    embed.add_field(name='Best Win Streak', value=profile['longest_win_streak'] + ' games', inline=True)
-    embed.add_field(name='Past results', value=profile['results'], inline=True)
-    embed.add_field(name='\u200b', value='━━━━━━━━━━━━━━━', inline=False)
-    embed.add_field(name='Ranking :flag_dk:', value=profile['country_ranking'], inline=True)
-    embed.add_field(name='Ranking :flag_eu:', value=profile['region_ranking'], inline=True)
-    embed.set_footer(text=date)
+    # Displays player stats from last twenty matches.
+    @commands.command(name='stats', help='Displays stats of last 20 matches.')
+    async def stats(self, ctx, nickname):
+        previous_status = bot.guilds[0].get_member(bot.user.id).activity
+        
+        await ctx.message.add_reaction("<:ezy:558785929171697695>")
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="{}'s stats".format(nickname)))
 
-    await ctx.send(embed=embed)
-    await bot.change_presence(activity=previous_status)
+        date = datetime.datetime.now()
 
-# Displays player stats from last twenty matches.
-@bot.command(name='stats', help='Displays stats of last 20 matches.')
-async def stats(ctx, nickname):
-    previous_status = bot.guilds[0].get_member(bot.user.id).activity
-    
-    await ctx.message.add_reaction("<:ezy:558785929171697695>")
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="{}'s stats".format(nickname)))
+        try:
+            stats = find_stats(nickname)
+        except KeyError as err:
+            print('A faulty name has been put in. \n Error: {}'.format(err))
+            await ctx.send('Did you type that name right? <:ezy:558785929171697695>')
+            await bot.change_presence(activity=previous_status)
+            return
+        except IndexError as err:
+            print('Error: {} \n'.format(err))
+            await ctx.send('Something is interfering with the match data <:pepehands:834501916754837594> \n\nCheck your stats on https://www.faceit.com/en/players/{}'.format(nickname))
+            await bot.change_presence(activity=previous_status)
+            return
 
-    date = datetime.datetime.now()
+        embed=discord.Embed(title='Last {} matches - **{}**'.format(stats['matches_length'], nickname),  url='https://www.faceit.com/en/players/{}'.format(nickname), color=0x824dff)
+        embed.set_thumbnail(url=stats['player_avatar'])
+        embed.add_field(name='Level', value=stats['player_level'], inline=True)
+        embed.add_field(name='ELO', value=stats['player_elo'], inline=True)
+        embed.add_field(name='\u200b', value='━━━━━━━━━━━━━━━', inline=False)
+        embed.add_field(name='Avg. kills', value=stats['avg_kills'], inline=True)
+        embed.add_field(name='Avg. HS%', value=stats['avg_hs_ratio'] + '%', inline=True)
+        embed.add_field(name='Avg. K/D', value=stats['avg_kd_ratio'], inline=True)
+        embed.add_field(name='Avg. K/R', value=stats['avg_kr_ratio'], inline=True)
+        embed.add_field(name='Win%', value=stats['win_rate'] + '%', inline=True)
+        embed.add_field(name='Past results', value=stats['results'], inline=True)
+        embed.add_field(name='\u200b', value='━━━━━━━━━━━━━━━', inline=False)
+        embed.add_field(name='Ranking :flag_dk:', value=stats['country_ranking'], inline=True)
+        embed.add_field(name='Ranking :flag_eu:', value=stats['region_ranking'], inline=True)
+        embed.set_footer(text=date)
 
-    try:
-        stats = find_stats(nickname)
-    except KeyError as err:
-        print('A faulty name has been put in. \n Error: {}'.format(err))
-        await ctx.send('Did you type that name right? <:ezy:558785929171697695>')
+        await ctx.send(embed=embed)
         await bot.change_presence(activity=previous_status)
-        return
-    except IndexError as err:
-        print('Error: {} \n'.format(err))
-        await ctx.send('Something is interfering with the match data <:pepehands:834501916754837594> \n\nCheck your stats on https://www.faceit.com/en/players/{}'.format(nickname))
-        await bot.change_presence(activity=previous_status)
-        return
 
-    embed=discord.Embed(title='Last {} matches - **{}**'.format(stats['matches_length'], nickname),  url='https://www.faceit.com/en/players/{}'.format(nickname), color=0x824dff)
-    embed.set_thumbnail(url=stats['player_avatar'])
-    embed.add_field(name='Level', value=stats['player_level'], inline=True)
-    embed.add_field(name='ELO', value=stats['player_elo'], inline=True)
-    embed.add_field(name='\u200b', value='━━━━━━━━━━━━━━━', inline=False)
-    embed.add_field(name='Avg. kills', value=stats['avg_kills'], inline=True)
-    embed.add_field(name='Avg. HS%', value=stats['avg_hs_ratio'] + '%', inline=True)
-    embed.add_field(name='Avg. K/D', value=stats['avg_kd_ratio'], inline=True)
-    embed.add_field(name='Avg. K/R', value=stats['avg_kr_ratio'], inline=True)
-    embed.add_field(name='Win%', value=stats['win_rate'] + '%', inline=True)
-    embed.add_field(name='Past results', value=stats['results'], inline=True)
-    embed.add_field(name='\u200b', value='━━━━━━━━━━━━━━━', inline=False)
-    embed.add_field(name='Ranking :flag_dk:', value=stats['country_ranking'], inline=True)
-    embed.add_field(name='Ranking :flag_eu:', value=stats['region_ranking'], inline=True)
-    embed.set_footer(text=date)
-
-    await ctx.send(embed=embed)
-    await bot.change_presence(activity=previous_status)
+# Add categories (cogs)
+bot.add_cog(Miscellaneous(bot))
+bot.add_cog(Faceit(bot))
 
 # RUN
 bot.run(TOKEN)
