@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 from faceit_api import *
 from faceit_commands import *
+from misc_commands import backflip_gif
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -29,7 +30,8 @@ async def on_ready():
 # ----------------------------------------------
 @bot.command(name='backflip', help='Displays a backflip GIF.')
 async def backflip(ctx):
-    await ctx.send('https://giphy.com/gifs/officialfiym-forever-in-your-mind-fiym-xT0xetpPHT8UryiiqY')
+    gif = backflip_gif()
+    await ctx.send(gif)
     await ctx.message.add_reaction("<:ezy:558785929171697695>")
 
 # Displays lifetime stats, current ranking, and results of last five games (W or L)
