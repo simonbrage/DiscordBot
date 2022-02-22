@@ -1,5 +1,6 @@
 from ast import alias
 import os
+from unicodedata import name
 import discord
 import datetime
 from dotenv import load_dotenv
@@ -29,6 +30,7 @@ async def on_ready():
 # -----------------------------------------------
 # ---------------- MISC COMMANDS ----------------
 # -----------------------------------------------
+
 class Miscellaneous(commands.Cog):
     @commands.command(name='backflip', help='Displays a backflip GIF.')
     async def backflip(self, ctx):
@@ -50,7 +52,21 @@ class Miscellaneous(commands.Cog):
         except ValueError:
             await ctx.message.delete(delay=5)
             return await ctx.send("Invalid number", delete_after=5)
+
+    @commands.command(name='poll', help='Take a vote on important matters.')
+    async def poll(self, ctx, *, args=None):
+        reactions = ['<:upvote:945682129705140224>', '<:downvote:945682132301414460>']
+
+        if args == None: 
+            await ctx.send("Please provide a subject to vote about <:ezy:558785929171697695>", delete_after=5)
+            await ctx.message.delete(delay=2)
+            return
         
+        embed=discord.Embed(title=str(args[:]), description="React below to vote!")
+        msg = await ctx.send(embed=embed)
+
+        for emoji in reactions:
+            await msg.add_reaction(emoji)
 
 # -----------------------------------------------
 # --------------- FACEIT COMMANDS ---------------
