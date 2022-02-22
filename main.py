@@ -64,6 +64,7 @@ class Miscellaneous(commands.Cog):
         
         embed=discord.Embed(title=str(args[:]), description="React below to vote!")
         msg = await ctx.send(embed=embed)
+        await ctx.message.delete(delay=2)
 
         for emoji in reactions:
             await msg.add_reaction(emoji)
