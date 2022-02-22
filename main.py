@@ -61,7 +61,7 @@ class Miscellaneous(commands.Cog):
             await ctx.message.delete(delay=2)
             return
         
-        embed=discord.Embed(title=str(subject[:]), description="React below to vote! {}".format("<:ezy:558785929171697695>"))
+        embed=discord.Embed(title=str(subject[:]), description="React below to vote! {}".format("<:ezy:558785929171697695>"), color=0x824dff)
         embed.set_footer(text='Poll by {} on {}'.format(ctx.message.author.display_name, date.strftime('%A %d-%m-%Y, %H:%M:%S')))
         msg = await ctx.send(embed=embed)
         await ctx.message.delete(delay=2)
