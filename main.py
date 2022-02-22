@@ -1,6 +1,4 @@
-from ast import alias
 import os
-from unicodedata import name
 import discord
 import datetime
 from dotenv import load_dotenv
