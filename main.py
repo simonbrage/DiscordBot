@@ -106,7 +106,7 @@ class Faceit(commands.Cog):
         embed.add_field(name='\u200b', value='━━━━━━━━━━━━━━━', inline=False)
         embed.add_field(name='Ranking :flag_dk:', value=profile['country_ranking'], inline=True)
         embed.add_field(name='Ranking :flag_eu:', value=profile['region_ranking'], inline=True)
-        embed.set_footer(text=date)
+        embed.set_footer(text=date.strftime('%A %d-%m-%Y, %H:%M:%S'))
 
         await ctx.send(embed=embed)
         await bot.change_presence(activity=previous_status)
@@ -148,7 +148,7 @@ class Faceit(commands.Cog):
         embed.add_field(name='\u200b', value='━━━━━━━━━━━━━━━', inline=False)
         embed.add_field(name='Ranking :flag_dk:', value=stats['country_ranking'], inline=True)
         embed.add_field(name='Ranking :flag_eu:', value=stats['region_ranking'], inline=True)
-        embed.set_footer(text=date)
+        embed.set_footer(text=date.strftime('%A %d-%m-%Y, %H:%M:%S'))
 
         await ctx.send(embed=embed)
         await bot.change_presence(activity=previous_status)
