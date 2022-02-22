@@ -56,13 +56,15 @@ class Miscellaneous(commands.Cog):
     @commands.command(name='poll', help='Take a vote on important matters.')
     async def poll(self, ctx, *, args=None):
         reactions = ['<:upvote:945682129705140224>', '<:downvote:945682132301414460>']
+        date = datetime.datetime.now()
 
         if args == None: 
             await ctx.send("Please provide a subject to vote about <:ezy:558785929171697695>", delete_after=5)
             await ctx.message.delete(delay=2)
             return
         
-        embed=discord.Embed(title=str(args[:]), description="React below to vote!")
+        embed=discord.Embed(title=str(args[:]), description="React below to vote! {}".format("<:ezy:558785929171697695>"))
+        embed.set_footer(text='Poll by {} on {}'.format(ctx.message.author.display_name, date.strftime('%A %d-%m-%Y, %H:%M:%S')))
         msg = await ctx.send(embed=embed)
         await ctx.message.delete(delay=2)
 
