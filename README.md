@@ -1,6 +1,6 @@
 # DiscordBot
 
-Small Discord bot with commands that allows users of the Discord server to access their Faceit (CS:GO) stats, profiles, and more. Utilizes the [discord.py](https://discordpy.readthedocs.io/en/stable/) library.
+Small Discord bot with commands that allows users of the Discord server to access their Faceit (CS:GO) stats, profiles, and more. Utilizes the [discordpy](https://discordpy.readthedocs.io/en/stable/) library.
 
 ## Current available commands
 
