@@ -11,7 +11,7 @@ Small Discord bot with commands that allows users of the Discord server to acces
 **Miscellaneous:**
 - `-backflip` Displays a backflip GIF.
 - `-poll`     Take a vote on important matters.
-- `-roll`     Pick a random number between 1 and your number.
+- `-roll`     Pick a random number between 1 and your number (defaults to 6).
   
 **Default:**
 - `-help`     Shows embed with list of available commands.
