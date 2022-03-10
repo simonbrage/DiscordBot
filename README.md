@@ -14,4 +14,4 @@ Small Discord bot with commands that allows users of the Discord server to acces
 - `-roll`     Pick a random number between 1 and your number.
   
 **Default:**
-- `-help`     Shows this message
+- `-help`     Shows embed with list of available commands.
