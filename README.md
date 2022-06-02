@@ -44,4 +44,4 @@ The bot currently supports the following commands:
 **Default:**
 - `-help`     Shows embed with list of available commands.
 
-If you have any suggestions for commands but fro some reason can't or dont' know how to make them yourselves, feel free to open an issue.
+If you have any suggestions for commands feel free to open an issue.
