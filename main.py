@@ -15,31 +15,25 @@ help_command = commands.DefaultHelpCommand(no_category = 'Default')
 
 # Bot setup
 bot = commands.Bot(
+    intents = discord.Intents.all(),
     command_prefix=commands.when_mentioned_or('-'),
     help_command = help_command
 )
-
-# Start-up
-@bot.event
-async def on_ready():
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='-help'))
-    print(f'{bot.user.name} is connected.')
 
 # -----------------------------------------------
 # ---------------- MISC COMMANDS ----------------
 # -----------------------------------------------
 
 class Miscellaneous(commands.Cog):
-    @commands.command(name='backflip', help='Displays a backflip GIF.')
+    @commands.command(name='backflip', description='Displays a backflip GIF.')
     async def backflip(self, ctx):
         gif = backflip_gif()
         await ctx.send(gif)
         await ctx.message.add_reaction("<:ezy:558785929171697695>")
 
     @commands.command(name='roll', 
-                description= 'Pick a random number between 1 and the given number. Defaults to 1 and 6 if no number is given.', 
-                help='Pick a random number between 1 and your number.')
-    async def roll(self, ctx, number=None):
+                description= 'Pick a random number between 1 and the given number. Defaults to 1 and 6 if no number is given.')
+    async def roll(self, ctx, number: int=None):
         if number == None: 
             await ctx.send('{} rolled **{}** (1-6)'.format(ctx.message.author.mention, dice_roll()))
             await ctx.message.delete(delay=2)
@@ -51,8 +45,8 @@ class Miscellaneous(commands.Cog):
             await ctx.message.delete(delay=5)
             return await ctx.send("Invalid number", delete_after=5)
 
-    @commands.command(name='poll', help='Take a vote on important matters.')
-    async def poll(self, ctx, *, subject=None):
+    @commands.command(name='poll', description='Take a vote on important matters.')
+    async def poll(self, ctx, *, subject: str=None):
         reactions = ['<:upvote:945682129705140224>', '<:downvote:945682132301414460>']
         date = datetime.datetime.now()
 
@@ -75,8 +69,8 @@ class Miscellaneous(commands.Cog):
 
 class Faceit(commands.Cog):
     # Displays lifetime stats, current ranking, and results of last five games (W or L)
-    @commands.command(name='profile', help='Displays Faceit profile of a player.')
-    async def profile(self, ctx, nickname):
+    @commands.command(name='profile', description='Displays Faceit profile of a player.')
+    async def profile(self, ctx, nickname: str):
         previous_status = bot.guilds[0].get_member(bot.user.id).activity
 
         await ctx.message.add_reaction("<:ezy:558785929171697695>")
@@ -112,8 +106,8 @@ class Faceit(commands.Cog):
         await bot.change_presence(activity=previous_status)
 
     # Displays player stats from last twenty matches.
-    @commands.command(name='stats', help='Displays stats of last 20 matches.')
-    async def stats(self, ctx, nickname):
+    @commands.command(name='stats', description='Displays stats of last 20 matches.')
+    async def stats(self, ctx, nickname: str):
         previous_status = bot.guilds[0].get_member(bot.user.id).activity
         
         await ctx.message.add_reaction("<:ezy:558785929171697695>")
@@ -154,8 +148,17 @@ class Faceit(commands.Cog):
         await bot.change_presence(activity=previous_status)
 
 # Add categories (cogs)
-bot.add_cog(Miscellaneous(bot))
-bot.add_cog(Faceit(bot))
+async def load_cogs():
+    await bot.wait_until_ready()
+    await bot.add_cog(Miscellaneous(bot))
+    await bot.add_cog(Faceit(bot))
+
+# Start-up
+@bot.event
+async def on_ready():
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='-help'))
+    await load_cogs()
+    print(f'{bot.user.name} is connected.')
 
 # RUN
 bot.run(TOKEN)
